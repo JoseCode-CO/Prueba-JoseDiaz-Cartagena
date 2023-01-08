@@ -20,7 +20,7 @@ class Activity extends Model
 
     public function culturalRight()
     {
-        return $this->belongsTo(Cultural_right::class);
+        return $this->belongsTo(CulturalRight::class);
     }
 
     public function nac()
