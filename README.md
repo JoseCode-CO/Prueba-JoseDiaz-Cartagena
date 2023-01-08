@@ -1,5 +1,5 @@
 
-## About Laravel
+## About 
 
 Jose Diaz Cartagena - Colombia, aplicacion con crud mediante api rest y con front hecho en blade
 
