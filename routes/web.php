@@ -21,4 +21,4 @@ Route::prefix('activity')->group(function () {
     Route::get('/{activity}', [ActivityController::class, 'edit'])->name('activity.edit');
     Route::put('/{activity}', [ActivityController::class, 'update'])->name('activity.update');
     Route::delete('/{activity}', [ActivityController::class, 'destroy'])->name('activity.delete');
-})->middleware(['auth']);
+});

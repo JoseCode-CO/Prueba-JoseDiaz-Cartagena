@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Expertise;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,31 +16,38 @@ class ExpertiseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 1,
             'name' => 'Artes plásticas'
         ]);
 
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 2,
             'name' => 'Teatro'
         ]);
 
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 3,
             'name' => 'Música'
         ]);
 
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 4,
             'name' => 'Danza'
         ]);
 
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 5,
             'name' => 'Cocina tradicional'
         ]);
 
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 6,
             'name' => 'Juegos tradicionales'
         ]);
 
-        DB::table('expertises')->insert([
+        Expertise::create([
+            'id' => 7,
             'name' => 'Promoción de lectura'
         ]);
     }

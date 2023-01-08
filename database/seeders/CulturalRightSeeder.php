@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CulturalRight;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,27 +16,33 @@ class CulturalRightSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cultural_rights')->insert([
+        CulturalRight::create([
+            'id' => 1,
             'name' => 'Identidad y patrimonios culturales'
         ]);
 
-        DB::table('cultural_rights')->insert([
+        CulturalRight::create([
+            'id' => 2,
             'name' => 'Referencias a comunidades culturales'
         ]);
 
-        DB::table('cultural_rights')->insert([
+        CulturalRight::create([
+            'id' => 3,
             'name' => 'Acceso y participación en la vida cultural'
         ]);
 
-        DB::table('cultural_rights')->insert([
+        CulturalRight::create([
+            'id' => 4,
             'name' => 'Educación y formación'
         ]);
 
-        DB::table('cultural_rights')->insert([
+        CulturalRight::create([
+            'id' => 5,
             'name' => 'Información y comunicación'
         ]);
 
-        DB::table('cultural_rights')->insert([
+        CulturalRight::create([
+            'id' => 6,
             'name' => 'Cooperación cultural'
         ]);
     }
