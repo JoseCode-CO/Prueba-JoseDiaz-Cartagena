@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class CulturalRight extends Model
 {
+    //Tabla de la base de datos
     protected $table = "cultural_rights";
-    protected $fillable = [ 'name'];
+
+    //Atributos de la tabla
+    protected $fillable = ['name'];
     public $timestamps = true;
 
     use HasFactory;
 
+    //Relacion con el modelo Activity
     public function activityCultural()
     {
         return $this->hasOne(Activity::class);

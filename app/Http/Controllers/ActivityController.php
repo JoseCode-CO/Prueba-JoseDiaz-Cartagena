@@ -10,6 +10,8 @@ use App\Models\Nac;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isNull;
+
 class ActivityController extends Controller
 {
 
@@ -47,18 +49,27 @@ class ActivityController extends Controller
      */
     public function store(ActivityFormRequest $request)
     {
+        //Defino la letra F para el consecutivo
         $consecLetters = 'F';
+
+        //Hago una consulta por el ultimo id de la tabla Activity, para concatenar
+        //Con la letra F y crear el consecutivo de manera automatica
         $consecNumber = Activity::pluck('id')->max() + 1;
 
+        //Le agrego formato a la hora
         $final_hour = Carbon::parse($request->input('final_hour'))->format('H:i:s');
         $start_time = Carbon::parse($request->input('start_time'))->format('H:i:s');
 
+        //Hago una condicion que si no hay registros en la tabla de actividad
+        //Que agrege el primer consecutivo
         if ($consecNumber == null) {
             $consec = "F1";
         }
 
+        //Creo el consecutivo de manera automatica concateno la letra F con un id
         $consec = strval($consecLetters) . ($consecNumber);
 
+        //Creo la actividad
         Activity::create([
             'consecutive' => $consec,
             'activity_name' => $request->activy_name,
@@ -70,6 +81,7 @@ class ActivityController extends Controller
             'cultural_right_id' => $request->cultural_rights,
         ]);
 
+        //Retornamos a la vista con un mensaje
         session()->flash('success', 'Tu registro ha sido exitoso!');
         return back();
     }
@@ -83,8 +95,17 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
+        //Consultar actividad por id que se quiere editar
         $activity = Activity::find($id);
 
+        //Hago una condicion que si el id que pasamos por url no existe que aborte el programa
+        if ($activity == null) {
+            abort(404);
+        }
+
+        //Hago 3 consultas para ordenar la expertise, el nac y el culturalRight que eligió el usuario
+        //A la hora de crear la actividad, para que cuando vaya a editar su actividad en las listas
+        //Desplegables salga el que seleccionó
         $expertises = Expertise::where('id', $activity->expertise_id)
             ->union(Expertise::where('name', "!=", $activity->expertise_id))
             ->get();
@@ -97,6 +118,7 @@ class ActivityController extends Controller
             ->union(CulturalRight::where('name', "!=",  $activity->cultural_right_id))
             ->get();
 
+        //Retorno la vista, y le pasao la data para el formulario
         return view('crud-activity.edit', compact('activity', 'expertises', 'culturalRigths', 'nacs'));
     }
 
@@ -109,9 +131,11 @@ class ActivityController extends Controller
      */
     public function update(ActivityFormRequest $request, Activity $activity)
     {
+        //Formateo las fechas
         $final_hour = Carbon::parse($request->input('final_hour'))->format('H:i:s');
         $start_time = Carbon::parse($request->input('start_time'))->format('H:i:s');
 
+        //Actualizo la actividad
         $activity->update([
             'activity_name' => $request->activy_name,
             'start_time' => $start_time,
@@ -122,8 +146,8 @@ class ActivityController extends Controller
             'cultural_right_id' => $request->cultural_rights,
         ]);
 
+        //Retorno la vista con todos las actividades creadas
         return redirect()->route('activity.index', $activity);
-
     }
 
     /**
@@ -134,6 +158,7 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
+        //Elimino una actividad
         Activity::destroy($activity->id);
         return back();
     }
